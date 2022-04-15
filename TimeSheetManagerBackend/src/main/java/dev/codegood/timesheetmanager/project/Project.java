@@ -1,6 +1,6 @@
 package dev.codegood.timesheetmanager.project;
 
-import dev.codegood.timesheetmanager.Task.Task;
+import dev.codegood.timesheetmanager.task.Task;
 import dev.codegood.timesheetmanager.project.exception.ProjectStateException;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -102,5 +102,10 @@ public class Project {
     public void removeTask(Task task) {
         long timeSpentToRemove = task.getEndDate().getTime() - task.getStartDate().getTime();
         timeSpent -= timeSpentToRemove;
+    }
+
+    public void addTask (Task task) {
+        long timeSpentToRemove = task.getEndDate().getTime() - task.getStartDate().getTime();
+        timeSpent += timeSpentToRemove;
     }
 }

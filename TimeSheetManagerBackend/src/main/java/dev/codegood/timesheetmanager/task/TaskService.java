@@ -1,13 +1,14 @@
-package dev.codegood.timesheetmanager.Task;
+package dev.codegood.timesheetmanager.task;
 
-import dev.codegood.timesheetmanager.Task.exceptions.TaskNotFoundException;
+import dev.codegood.timesheetmanager.task.exceptions.TaskInvalidException;
+import dev.codegood.timesheetmanager.task.exceptions.TaskNotFoundException;
 import dev.codegood.timesheetmanager.project.Project;
 import dev.codegood.timesheetmanager.project.ProjectRepository;
-import dev.codegood.timesheetmanager.project.ProjectService;
 import dev.codegood.timesheetmanager.project.exception.ProjectNotFoundException;
 import dev.codegood.timesheetmanager.util.AuthUtil;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +24,21 @@ public class TaskService {
         this.projectRepository = projectRepository;
     }
 
-    public void createTask (Task task) {
+    public void saveTask (Task task) {
         taskRepository.save(task);
+    }
+
+    public Task createTask (Task task) throws TaskInvalidException, ProjectNotFoundException {
+        if (!task.isValid()) {
+            throw new TaskInvalidException("Task is not valid");
+        }
+        task.setUserId(AuthUtil.getUserId());
+        Project project = getProjectById(task.getProjectId());
+        project.addTask(task);
+
+        projectRepository.save(project);
+        taskRepository.save(task);
+        return task;
     }
 
     public Task getTaskById (String id) throws TaskNotFoundException {

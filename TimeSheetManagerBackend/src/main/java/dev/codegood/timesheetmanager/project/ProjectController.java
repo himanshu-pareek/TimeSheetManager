@@ -1,8 +1,8 @@
 package dev.codegood.timesheetmanager.project;
 
-import dev.codegood.timesheetmanager.Task.Task;
-import dev.codegood.timesheetmanager.Task.TaskModelAssembler;
-import dev.codegood.timesheetmanager.Task.TaskService;
+import dev.codegood.timesheetmanager.task.Task;
+import dev.codegood.timesheetmanager.task.TaskModelAssembler;
+import dev.codegood.timesheetmanager.task.TaskService;
 import dev.codegood.timesheetmanager.project.exception.ProjectMissingAttributeException;
 import dev.codegood.timesheetmanager.project.exception.ProjectNotFoundException;
 import dev.codegood.timesheetmanager.project.exception.ProjectStateException;

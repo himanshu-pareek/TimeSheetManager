@@ -1,9 +1,11 @@
-package dev.codegood.timesheetmanager.Task;
+package dev.codegood.timesheetmanager.task;
 
-import dev.codegood.timesheetmanager.Task.exceptions.TaskNotFoundException;
+import dev.codegood.timesheetmanager.task.exceptions.TaskInvalidException;
+import dev.codegood.timesheetmanager.task.exceptions.TaskNotFoundException;
 import dev.codegood.timesheetmanager.project.ProjectExceptionHandlers;
 import dev.codegood.timesheetmanager.project.exception.ProjectNotFoundException;
 import dev.codegood.timesheetmanager.security.SecurityExceptionHandlers;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,22 @@ public class TaskController {
             @PathVariable("id") String id
     ) {
         return null;
+    }
+
+    @PostMapping("")
+    public ResponseEntity<?> createOne(
+            @RequestBody Task task
+    ) {
+        try {
+            task = taskService.createTask(task);
+        } catch (TaskInvalidException e) {
+            return TaskExceptionHandlers.handleTaskInvalidException(e);
+        } catch (ProjectNotFoundException e) {
+            return ProjectExceptionHandlers.handleProjectNotFoundException(e);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                taskModelAssembler.toModel(task)
+        );
     }
 
     @DeleteMapping("/{id}")

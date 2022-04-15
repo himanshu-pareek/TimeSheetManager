@@ -1,4 +1,4 @@
-package dev.codegood.timesheetmanager.Task;
+package dev.codegood.timesheetmanager.task;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

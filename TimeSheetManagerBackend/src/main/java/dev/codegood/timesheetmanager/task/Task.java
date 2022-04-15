@@ -1,8 +1,9 @@
-package dev.codegood.timesheetmanager.Task;
+package dev.codegood.timesheetmanager.task;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 
@@ -62,5 +63,14 @@ public class Task {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public boolean isValid() {
+        if (this.projectId == null) return false;
+        if (this.startDate == null) return false;
+        if (this.endDate == null) return false;
+        this.projectId = this.projectId.trim();
+        if (this.projectId.isBlank()) return false;
+        return this.startDate.compareTo(this.endDate) < 0;
     }
 }

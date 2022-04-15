@@ -1,7 +1,21 @@
 <div class="task-list-container">
-	<h2 class="task-list_project-name">
-		{{project.name}}
-	</h2>
+	<div class="task-list_header">
+		<h2 class="task-list_project-name">
+			{{project.name}}
+		</h2>
+		<button (click)="viewAddNewTaskForm()">{{displayNewTaskForm ? "Cancel" : "New Task"}}</button>
+	</div>
+
+	<div *ngIf="displayNewTaskForm" class="task-list_task__new">
+		<form (submit)="createNewTask($event)">
+			From: <input type="datetime-local" name="startDate" (change)="handleStartDateChange($event)" required />
+			<br>
+			To: <input type="datetime-local" name="endDate" (change)="handleEndDateChange($event)" required>
+			<br>
+			<button type="submit" [disabled]="disableCreateTaskButton">Create</button>
+		</form>
+	</div>
+
 	<ul class="task-list" *ngIf="taskList">
 		<li *ngFor="let task of taskList" class="task-list_item">
 			<project-task [task]="task" (taskDeleted)="onTaskDeleted($event)"></project-task>
