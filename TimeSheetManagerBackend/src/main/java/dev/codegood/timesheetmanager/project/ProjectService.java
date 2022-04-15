@@ -1,7 +1,7 @@
 package dev.codegood.timesheetmanager.project;
 
-import dev.codegood.timesheetmanager.Task.Task;
-import dev.codegood.timesheetmanager.Task.TaskService;
+import dev.codegood.timesheetmanager.task.Task;
+import dev.codegood.timesheetmanager.task.TaskService;
 import dev.codegood.timesheetmanager.project.exception.ProjectMissingAttributeException;
 import dev.codegood.timesheetmanager.project.exception.ProjectNotFoundException;
 import dev.codegood.timesheetmanager.project.exception.ProjectStateException;
@@ -76,7 +76,7 @@ public class ProjectService {
         Task task = project.stopWorking();
         task.setUserId(AuthUtil.getUserId());
         projectRepository.save(project);
-        taskService.createTask(task);
+        taskService.saveTask(task);
         return project;
     }
 }

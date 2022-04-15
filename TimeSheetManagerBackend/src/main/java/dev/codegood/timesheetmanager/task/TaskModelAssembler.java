@@ -1,4 +1,4 @@
-package dev.codegood.timesheetmanager.Task;
+package dev.codegood.timesheetmanager.task;
 
 import dev.codegood.timesheetmanager.project.ProjectController;
 import org.springframework.hateoas.EntityModel;

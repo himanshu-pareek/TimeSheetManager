@@ -1,4 +1,4 @@
-package dev.codegood.timesheetmanager.Task.exceptions;
+package dev.codegood.timesheetmanager.task.exceptions;
 
 public class TaskNotFoundException extends Exception {
     public TaskNotFoundException() {

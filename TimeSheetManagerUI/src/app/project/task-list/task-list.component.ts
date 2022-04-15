@@ -15,6 +15,9 @@ export class TaskListComponent implements OnInit, OnChanges {
 	@Output() updateProject = new EventEmitter<string>();
 
 	taskList: Task[] = [];
+	displayNewTaskForm: boolean = false;
+	startDateNewTask: Date | null = null;
+	endDateNewTask: Date | null = null;
 
 	constructor(
 		private taskService: TaskService,
@@ -44,10 +47,55 @@ export class TaskListComponent implements OnInit, OnChanges {
 			this.taskList.splice(taskIndex, 1);
 	}
 
+	addTask(task: Task): void {
+		this.taskList = [
+			...this.taskList,
+			task
+		];
+	}
+
 	onTaskDeleted(task: Task): void {
 		// 1. Fire event
 		this.updateProject.emit(task.projectId);
 		// 2. Remove task from the array
 		this.removeTask(task.id);
+	}
+
+	onTaskCreated(task: Task): void {
+		this.updateProject.emit(task.projectId);
+		this.addTask(task);
+	}
+
+	viewAddNewTaskForm() {
+		this.displayNewTaskForm = !this.displayNewTaskForm;
+	}
+
+	handleStartDateChange(event: any) {
+		if (event.target.value) {
+			this.startDateNewTask = new Date(event.target.value);
+		} else {
+			this.startDateNewTask = null;
+		}
+	}
+
+	handleEndDateChange(event: any) {
+		if (event.target.value) {
+			this.endDateNewTask = new Date(event.target.value);
+		} else {
+			this.endDateNewTask = null;
+		}
+	}
+
+	createNewTask(event: SubmitEvent) {
+		event.preventDefault();
+		console.log(this.startDateNewTask + " - " + this.endDateNewTask);
+		this.taskService.createTask(this.startDateNewTask, this.endDateNewTask, this.project.id)
+			.subscribe(task => {
+				this.onTaskCreated(task);
+			})
+	}
+
+	get disableCreateTaskButton() {
+		return !this.startDateNewTask || !this.endDateNewTask;
 	}
 }
