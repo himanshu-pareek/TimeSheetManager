@@ -1,0 +1,28 @@
+<div class="project-container">
+	<h1>{{project.name}}</h1>
+	<h2 class="project_time-spent">{{project.timeSpent | beautifulTimeDifference}}</h2>
+	<h3>{{project.description}}</h3>
+	<div>
+		<a href="{{project.externalUrl}}">Visit project</a>
+	</div>
+	<button (click)="viewTasks()">View Tasks</button>
+	<br/>
+	<div *ngIf="loading">
+		Loading...
+	</div>
+	<div *ngIf="!loading">
+
+		<div *ngIf="project.startedAt">
+			<h4>Working from {{project.startedAt | datetime}}</h4>
+			<button (click)="stopWorking()">
+				Stop working 🛌
+			</button>
+		</div>
+		<div *ngIf="!project.startedAt">
+			<button (click)="startWorking()">
+				Start working 🚀
+			</button>
+		</div>
+	</div>
+
+</div>

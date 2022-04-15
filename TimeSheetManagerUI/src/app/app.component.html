@@ -1,0 +1,16 @@
+<div>
+	Welcome to TimeSheet Manager
+
+	<div *ngIf="isLoggedIn">
+		You are logged in.
+		<button (click)="logout()">Logout</button>
+	</div>
+
+	<div *ngIf="!isLoggedIn">
+		You are not logged in.
+		<button (click)="login()">Login</button>
+	</div>
+
+	<router-outlet></router-outlet>
+
+</div>

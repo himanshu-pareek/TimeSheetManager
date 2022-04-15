@@ -1,0 +1,14 @@
+.task {
+	padding: 10px;
+	border: 1px solid black;
+	width: 200px;
+}
+
+.task > div {
+	margin-top: 5px;
+}
+
+.task_action-bar {
+	display: flex;
+	justify-content: space-between;
+}

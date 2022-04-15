@@ -1,0 +1,16 @@
+<div class="task">
+	<div class="task_start-date">
+		From - {{task.startDate | datetime}}
+	</div>
+	<div class="task_end-date">
+		To - {{task.endDate | datetime}}
+	</div>
+	<div class="task_action-bar">
+		<span class="task_time-spent">
+			{{timeSpent | beautifulTimeDifference}}
+		</span>
+		<button class="task_button__delete" (click)="deleteTask()">
+			Delete
+		</button>
+	</div>
+</div>

@@ -1,0 +1,40 @@
+<div>
+	<h2 class="project-list_heading">Projects
+		<button (click)="handleCreateNewProjectClick()">New Project ➕</button>
+	</h2>
+	<h3 *ngIf="isLoading" class="project-list__loading">
+		Getting your projects
+	</h3>
+	<h3 *ngIf="!isLoading && !projectList" class="project-list__empty">
+		No projects found. Crate one by clicking <strong>New Project ➕</strong> button above.
+	</h3>
+	<div *ngIf="projectToCreate">
+		<form (submit)="createNewProject($event)">
+			Name: <input type="text" name="name" required minlength="5" maxlength="50"
+						 placeholder="Enter project name here" (keyup)="handleFormFieldChange($event)"
+						 [value]="projectToCreate.name"/>
+			<br>
+			Description<br/>
+			<textarea name="description" rows="3" maxlength="500" placeholder="Say something cool 😎 about your project"
+					  (keyup)="handleFormFieldChange($event)"
+			[value]="projectToCreate.description"></textarea>
+			<br>
+			External Url: <input type="text" name="externalUrl" maxlength="200" placeholder="Enter project url here"
+								 (keyup)="handleFormFieldChange($event)" [value]="projectToCreate.externalUrl"/>
+			<br>
+			<button type="submit" value="Create">Create</button>
+			<button (click)="handleCancelNewProjectClick()">Cancel</button>
+		</form>
+	</div>
+	<div class="project-list-container" *ngIf="projectList">
+		<ul class="project-list">
+			<li *ngFor="let project of projectList" class="project-list_item">
+				<app-project [project]="project" (changed)="onChildChanged($event)"
+							 (viewTasksClicked)="onViewTasksClicked($event)"></app-project>
+			</li>
+		</ul>
+		<div *ngIf="currentProject" class="project-list_task-list">
+			<project-task-list [project]="currentProject" (updateProject)="handleUpdateProject($event)"></project-task-list>
+		</div>
+	</div>
+</div>
